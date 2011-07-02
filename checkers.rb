@@ -1,0 +1,2 @@
+class Checkers
+end
