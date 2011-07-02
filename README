@@ -1,0 +1,9 @@
+This program implements a Ruby class which models a checkers board. 
+
+The class has methods which allow a caller to ask whether a proposed
+move is valid or not and then to actually make a move.
+
+It only handle regular moves, not captures, and it doesn't handle
+kinging or moves by kinged pieces.
+
+It doesn't handle real user interaction or choose good moves.
