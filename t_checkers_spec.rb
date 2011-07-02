@@ -1,6 +1,8 @@
 require './checkers'
 
 describe Checkers do
-  it "should have a board" do
+  before :each do
+    @checkers = Checkers
   end
+
 end

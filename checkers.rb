@@ -1,2 +1,3 @@
 class Checkers
+
 end
