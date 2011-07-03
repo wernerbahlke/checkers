@@ -4,7 +4,7 @@ class Checkers
   $WHITE = 2
   $EMPTY = 0
 
-# The board cells start at array position 0 to 31. Coordinates are from 1 to 32
+# The board cells start at array position 0 to 31. Their coordinates are from 1 to 32.
 
   def initialize
     @board = Array[32]
@@ -29,6 +29,10 @@ class Checkers
     for i in (21..32)
       @board[i - 1] = $WHITE
     end
+  end
+
+  def isMoveValid(from, to)
+    
   end
 
   def print_board
