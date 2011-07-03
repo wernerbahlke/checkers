@@ -5,7 +5,11 @@ describe Checkers do
     @checkers = Checkers.new
   end
 
-  it "should have a setup method" do
-    @checkers.setup.should_not be_nil
+  it "should initialize board" do
+    @checkers.instance_eval{ initialize }
+  end
+
+  it "should have a print_board method" do
+    @checkers.instance_eval{ print_board }
   end  
 end
