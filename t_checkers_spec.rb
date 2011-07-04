@@ -9,12 +9,12 @@ describe Checkers do
     @checkers.instance_eval{ initialize }
   end
 
-  it "should have a print_board method" do
-    @checkers.instance_eval{ print_board }
+  it "should have a printBoard method" do
+    @checkers.instance_eval{ printBoard }
   end  
 
   it "should return indication if move is valid" do
-    @checkers.instance_eval{ isMoveValid }
+    @checkers.instance_eval{ isMoveValid(1, 5) }
   end
 
 end

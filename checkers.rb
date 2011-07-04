@@ -3,12 +3,13 @@ class Checkers
   $BLACK = 1
   $WHITE = 2
   $EMPTY = 0
+  $ROWS  = 8
 
 # The board represents only the 32 fields where checkers pieces can be placed.
-# Indexing within the board and the coordinates used go from 1 to 32.
+# Indexing within the board and coordinates go from 1 to 32.
 
   def initialize
-    @board = Array[33] # one larger so we can index from 1 to 32
+    @board = Array[]
     initializeTop
     initializeMiddle
     initializeBottom
@@ -32,11 +33,89 @@ class Checkers
     end
   end
 
-  def isMoveValid(from, to)
-    
+  def getRow(coord)
+    if coord % 4 == 0
+      row = coord/4
+    else
+      row = coord/4 + 1
+    end
   end
 
-  def print_board
+  def makeMove(fromCoord, toCoord)
+    if isMoveValid(fromCoord, toCoord)
+      @board[toCoord] = @board[fromCoord]
+      @board[fromCoord] = $EMPTY
+    end
+  end
+
+  def isMoveValid(fromCoord, toCoord)
+print "\nIn method\n"
+    row = getRow(fromCoord)
+print "from, to = "
+print fromCoord
+print ", "
+print toCoord
+print " row = "
+print row
+print "\n"
+
+    if @board[fromCoord] == $BLACK
+      if row % 2 == 0
+        downLeftCoord  = fromCoord + 4
+        downRightCoord = fromCoord + 5
+      else
+        downLeftCoord  = fromCoord + 3 
+        downRightCoord = fromCoord + 4
+      end
+
+      newRow = row + 1
+
+      if (getRow(downLeftCoord) > $ROWS) || (getRow(downRightCoord) > $ROWS)
+        print "Out of bounds\n"
+        return false
+      end
+    end
+
+    if @board[fromCoord] == $WHITE
+      if row % 2 == 0
+        downLeftCoord  = fromCoord - 4
+        downRightCoord = fromCoord - 3
+      else
+        downLeftCoord  = fromCoord - 5
+        downRightCoord = fromCoord - 4
+      end
+
+      newRow = row - 1
+
+      if (getRow(downLeftCoord) < 1) || (getRow(downRightCoord) < 1)
+        print "Out of bounds\n"
+        return false
+      end
+    end
+print " dl = "
+print downLeftCoord
+print " dr = "
+print downRightCoord
+print "\n"
+    
+      if getRow(downRightCoord) == newRow
+        if toCoord == downRightCoord
+print "dr match\n"
+          return true
+        end
+      else
+        if getRow(downLeftCoord) == newRow
+          if toCoord == downLeftCoord
+print "dl match\n"
+            return true
+          end
+        end
+      end
+print "no match\n"
+      return false
+  end
+
+  def printBoard
     print "\n"
     for i in (1..32)
       print @board[i]
