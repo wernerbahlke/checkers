@@ -66,4 +66,21 @@ checkers.makeMove(1,-2)
 
 checkers.printBoard
 
+print "And now move from 30 to 3 without re-initializing the board\n"
+
+checkers.makeMove(30,27)
+
+checkers.makeMove(27,23)
+
+checkers.makeMove(23,19)
+
+checkers.makeMove(19,15)
+
+checkers.makeMove(15,11)
+
+checkers.makeMove(11,6)
+
+checkers.makeMove(6,3)
+
+checkers.printBoard
 
