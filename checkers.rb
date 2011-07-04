@@ -4,10 +4,11 @@ class Checkers
   $WHITE = 2
   $EMPTY = 0
 
-# The board cells start at array position 0 to 31. Their coordinates are from 1 to 32.
+# The board represents only the 32 fields where checkers pieces can be placed.
+# Indexing within the board and the coordinates used go from 1 to 32.
 
   def initialize
-    @board = Array[32]
+    @board = Array[33] # one larger so we can index from 1 to 32
     initializeTop
     initializeMiddle
     initializeBottom
@@ -15,19 +16,19 @@ class Checkers
 
   def initializeTop
     for i in (1..12)
-      @board[i - 1] = $BLACK
+      @board[i] = $BLACK
     end
   end
 
   def initializeMiddle
     for i in (13..20)
-      @board[i - 1] = $EMPTY
+      @board[i] = $EMPTY
     end
   end
 
   def initializeBottom
     for i in (21..32)
-      @board[i - 1] = $WHITE
+      @board[i] = $WHITE
     end
   end
 
@@ -36,9 +37,13 @@ class Checkers
   end
 
   def print_board
-    for i in (0..31)
+    print "\n"
+    for i in (1..32)
       print @board[i]
       print " "
+      if i % 4 == 0 # break up in rows
+        print "\n"
+      end
     end
     print "\n"
   end
