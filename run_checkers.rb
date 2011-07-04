@@ -2,11 +2,7 @@ require './checkers'
 
 checkers = Checkers.new
 
-r = checkers.isMoveValid(1,5)
-
-print r
-
-print "\n"
+print "\nINVALID MOVE\n"
 
 r = checkers.isMoveValid(1,4)
 
@@ -14,29 +10,46 @@ print r
 
 print "\n"
 
-r = checkers.isMoveValid(8, 12)
+print "\nNow make some BLACK moves\n"
 
-print r
+checkers.makeMove(1,5)
 
-print "\n"
+checkers.makeMove(5,9)
 
-r = checkers.isMoveValid(32, 33)
+checkers.makeMove(9,13)
 
-print r
+checkers.makeMove(13,17)
 
-print "\n"
+checkers.makeMove(17,21)
 
-r = checkers.isMoveValid(32, 28)
+checkers.makeMove(21,25)
 
-print r
+checkers.makeMove(25,29)
 
-print "\n"
-
-r = checkers.isMoveValid(32, 29)
-
-print r
-
-print "\n"
-
+checkers.makeMove(29,33)
 
 checkers.printBoard
+
+print "\nNow make some WHITE moves\n"
+
+checkers = Checkers.new
+
+checkers.makeMove(29,25)
+
+checkers.makeMove(25,21)
+
+checkers.makeMove(21,17)
+
+checkers.makeMove(17,13)
+
+checkers.makeMove(13,9)
+
+checkers.makeMove(9,5)
+
+checkers.makeMove(5,1)
+
+checkers.makeMove(1,-2)
+
+checkers.printBoard
+
+

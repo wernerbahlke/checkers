@@ -98,21 +98,21 @@ print " dr = "
 print downRightCoord
 print "\n"
     
-      if getRow(downRightCoord) == newRow
-        if toCoord == downRightCoord
+    if getRow(downRightCoord) == newRow
+      if toCoord == downRightCoord
 print "dr match\n"
-          return true
-        end
-      else
-        if getRow(downLeftCoord) == newRow
-          if toCoord == downLeftCoord
-print "dl match\n"
-            return true
-          end
-        end
+        return true
       end
+    end
+
+    if getRow(downLeftCoord) == newRow
+      if toCoord == downLeftCoord
+print "dl match\n"
+        return true
+      end
+    end
 print "no match\n"
-      return false
+    return false
   end
 
   def printBoard
