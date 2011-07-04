@@ -2,15 +2,27 @@ require './checkers'
 
 checkers = Checkers.new
 
-print "\nINVALID MOVE\n"
+print "\nINVALID MOVES\n\n"
+
+print "Move from 1 to 4:\n"
 
 r = checkers.isMoveValid(1,4)
 
-print r
+print "Move valid: ", r
 
-print "\n"
+print "\n\n"
+
+print "Move from 13 (empty) to 17\n"
+
+r = checkers.isMoveValid(13,17)
+
+print "Move valid:", r
+
+print "\n\n"
 
 print "\nNow make some BLACK moves\n"
+
+print "Move from 1 to 29\n"
 
 checkers.makeMove(1,5)
 
@@ -31,6 +43,8 @@ checkers.makeMove(29,33)
 checkers.printBoard
 
 print "\nNow make some WHITE moves\n"
+
+print "Move from 29 to 1\n"
 
 checkers = Checkers.new
 

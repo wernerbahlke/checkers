@@ -7,3 +7,9 @@ It only handle regular moves, not captures, and it doesn't handle
 kinging or moves by kinged pieces.
 
 It doesn't handle real user interaction or choose good moves.
+
+IMPLEMENTATION:
+
+The board represents only the 32 fields (8 rows of 4) where checkers pieces can be placed.
+Indexing within the board and coordinates go from 1 to 32 (therefore the array @board's size is 33).
+For a display version of the game we have to do a coordinate transformation to a full 8 by 8 board.
