@@ -1,10 +1,10 @@
 class Checkers
 
-  $BLACK      = 1
-  $WHITE      = 2
-  $BLACK_KING = 3
-  $WHITE_KING = 4
-  $EMPTY      = 0
+  $BLACK      = "b"
+  $WHITE      = "w"
+  $BLACK_KING = "B"
+  $WHITE_KING = "W"
+  $EMPTY      = "."
   $ROWS       = 8
   $ROWLENGTH  = 4
   $SIZE      = $ROWS * $ROWLENGTH
@@ -58,6 +58,9 @@ class Checkers
       return false
     end
     if isMoveValid(fromCoord, toCoord)
+      if @captureCoord != 0
+        @board[@captureCoord] = $EMPTY
+      end
       @board[toCoord] = @board[fromCoord]
       @board[fromCoord] = $EMPTY
       return true
@@ -66,63 +69,135 @@ class Checkers
   end
 
   def isMoveValid(fromCoord, toCoord)
-    row = getRow(fromCoord)
+    @captureCoord = 0 # Only set if we jump and capture a piece
+    fromRow = getRow(fromCoord)
+    toRow   = getRow(toCoord)
+    if (getRow(toCoord) < 1) || (getRow(toCoord) > $ROWS)
+      return false
+    end
 
     if @board[fromCoord] == $EMPTY
       return false
     end
 
+    if @board[toCoord] != $EMPTY
+      return false
+    end
+
+    if (toRow - fromRow).abs  == 1
+      oneRow = 1
+      if (toCoord == moveRowsLeft(fromCoord, oneRow)) && (@board[toCoord] == $EMPTY)
+        return true
+      else
+        if (toCoord == moveRowsRight(fromCoord, oneRow)) && (@board[toCoord] == $EMPTY)
+          return true
+        end
+        return false
+      end
+    end
+
+    if (toRow - fromRow).abs  == 2
+      oneRow  = 1
+      twoRows = 2
+
+      if toCoord == moveRowsLeft(fromCoord, twoRows)
+        if @board[fromCoord] != @board[moveRowsLeft(fromCoord, oneRow)]
+          @captureCoord = moveRowsLeft(fromCoord, oneRow)
+          return true
+        end
+      end
+
+      if toCoord == moveRowsRight(fromCoord, twoRows)
+        if @board[fromCoord] != @board[moveRowsRight(fromCoord, oneRow)]
+          @captureCoord = moveRowsRight(fromCoord, oneRow)
+          return true
+        end
+      end
+      return false
+    end
+
+  end
+
+  def moveRowsLeft(fromCoord, nRows)
     if @board[fromCoord] == $BLACK
-      if row % 2 == 0
-        newLeftCoord  = fromCoord + $ROWLENGTH
-        newRightCoord = fromCoord + $ROWLENGTH + 1
+      if getRow(fromCoord) % 2 == 0
+        if nRows == 1
+          newLeftCoord = fromCoord + $ROWLENGTH
+        else
+          newLeftCoord = fromCoord + 2 * $ROWLENGTH - 1
+        end
       else
-        newLeftCoord  = fromCoord + $ROWLENGTH - 1
-        newRightCoord = fromCoord + $ROWLENGTH
-      end
-
-      newRow = row + 1
-
-      if (getRow(newLeftCoord) > $ROWS) || (getRow(newRightCoord) > $ROWS)
-        return false
+        if nRows == 1
+          newLeftCoord  = fromCoord + $ROWLENGTH - 1
+        else
+          newLeftCoord  = fromCoord + 2 * $ROWLENGTH - 1
+        end
       end
     end
-
+  
     if @board[fromCoord] == $WHITE
-      if row % 2 == 0
-        newLeftCoord  = fromCoord - $ROWLENGTH
-        newRightCoord = fromCoord - $ROWLENGTH + 1
+      if getRow(fromCoord) % 2 == 0
+        if nRows == 1
+          newLeftCoord  = fromCoord - $ROWLENGTH
+        else
+          newLeftCoord  = fromCoord - (2 * $ROWLENGTH + 1)
+        end
       else
-        newLeftCoord  = fromCoord - $ROWLENGTH - 1
-        newRightCoord = fromCoord - $ROWLENGTH 
-      end
-
-      newRow = row - 1
-
-      if (getRow(newLeftCoord) < 1) || (getRow(newRightCoord) < 1)
-        return false
+        if nRows == 1
+          newLeftCoord  = fromCoord - $ROWLENGTH - 1
+        else
+          newLeftCoord  = fromCoord - 2 * $ROWLENGTH - 1
+        end
       end
     end
-    
-    if getRow(newRightCoord) == newRow
-      if toCoord == newRightCoord
-        return true
-      end
-    end
+    return newLeftCoord
+  end
 
-    if getRow(newLeftCoord) == newRow
-      if toCoord == newLeftCoord
-        return true
+  def moveRowsRight(fromCoord, nRows)
+    if @board[fromCoord] == $BLACK
+      if getRow(fromCoord) % 2 == 0
+        if nRows == 1
+          newRightCoord  = fromCoord + $ROWLENGTH + 1
+        else
+          newRightCoord  = fromCoord + 2 * $ROWLENGTH + 1
+        end
+      else
+        if nRows == 1
+          newRightCoord  = fromCoord + $ROWLENGTH
+        else
+          newRightCoord  = fromCoord + 2 * $ROWLENGTH + 1
+        end
       end
     end
-    return false
+  
+    if @board[fromCoord] == $WHITE
+      if getRow(fromCoord) % 2 == 0
+        if nRows == 1
+          newRightCoord  = fromCoord - $ROWLENGTH + 1
+        else
+          newRightCoord  = fromCoord - 2 * $ROWLENGTH + 1
+        end
+      else
+        if nRows == 1
+          newRightCoord  = fromCoord - $ROWLENGTH
+        else
+          newRightCoord  = fromCoord - 2 *$ROWLENGTH + 1
+        end
+      end
+    end
+    return newRightCoord
   end
 
   def printBoard
     print "\n"
     for i in (1..$SIZE)
-      print @board[i]
-      print " "
+      if getRow(i) % 2 == 0
+        print "."
+        print @board[i]
+      else
+        print @board[i]
+        print "."
+      end                
       if i % $ROWLENGTH == 0 # break up in rows
         print "\n"
       end

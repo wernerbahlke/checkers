@@ -29,41 +29,26 @@ describe Checkers do
   end
 
   it "should return indication if move is valid" do
-    @checkers.isMoveValid(1,5).should be_true
+    @checkers.isMoveValid(1,5).should be_false
     @checkers.isMoveValid(1,4).should be_false
     @checkers.isMoveValid(13,17).should be_false
     @checkers.isMoveValid(32,29).should be_false
-    @checkers.isMoveValid(32,28).should be_true
+    @checkers.isMoveValid(32,28).should be_false
+    @checkers.isMoveValid(21,17).should be_true
   end
 
   it "should make moves correctly" do
     @checkers.makeMove(1,4).should be_false
     @checkers.makeMove(13,17).should be_false
-    @checkers.makeMove(1,5).should be_true
-    @checkers.makeMove(29,25).should be_true
+    @checkers.makeMove(9,13).should be_true
+    @checkers.makeMove(21,18).should be_true
   end
  
-  it "should move white piece in position one down to position 29" do
-    @checkers.makeMove(1,5).should be_true
-    @checkers.makeMove(5,9).should be_true
+  it "should make captures correctly" do
     @checkers.makeMove(9,13).should be_true
-    @checkers.makeMove(13,17).should be_true
-    @checkers.makeMove(17,21).should be_true
-    @checkers.makeMove(21,25).should be_true
-    @checkers.makeMove(25,29).should be_true
-    @checkers.makeMove(29,33).should be_false
-  end
-
-  it "should move black piece in postion 32 up to position 4" do
-    @checkers.makeMove(32,28).should be_true
-    @checkers.makeMove(28,23).should be_true
-    @checkers.makeMove(23,20).should be_true
-    @checkers.makeMove(20,15).should be_true
-    @checkers.makeMove(15,12).should be_true
-    @checkers.makeMove(12,8).should be_true
-    @checkers.makeMove(8,4).should be_true
-    @checkers.makeMove(4,0).should be_false
-    @checkers.makeMove(4,-2).should be_false
+    @checkers.makeMove(22,18).should be_true
+    @checkers.makeMove(13,22).should be_true
+    @checkers.makeMove(27,18).should be_true
   end
 
   it "should have printBoard method" do

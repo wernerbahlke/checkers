@@ -1,0 +1,174 @@
+class Checkers
+
+  $BLACK      = "b"
+  $WHITE      = "w"
+  $BLACK_KING = "B"
+  $WHITE_KING = "W"
+  $EMPTY      = "."
+  $ROWS       = 8
+  $ROWLENGTH  = 4
+  $SIZE      = $ROWS * $ROWLENGTH
+
+# The board represents only the 32 fields (8 rows of 4) where checkers pieces can be placed.
+# Indexing within the board and coordinates go from 1 to 32 (therefore the array @board's size is 33).
+# For a display version of the game we have to do a coordinate transformation to a full 8 by 8 board.
+
+  def initialize
+    @board = Array[]
+    initializeTop
+    initializeMiddle
+    initializeBottom
+  end
+
+  def getBoardSize
+    @board.size
+  end
+
+  def initializeTop
+    # three rows of black pieces - assumes $ROWLENGTH is 4
+    for i in (1..12)
+      @board[i] = $BLACK
+    end
+  end
+
+  def initializeMiddle
+     # two rows empty
+    for i in (13..20)
+      @board[i] = $EMPTY
+    end
+  end
+
+  def initializeBottom
+    # three rows of white pieces
+    for i in (21..$SIZE)
+      @board[i] = $WHITE
+    end
+  end
+
+  def getRow(coord)
+    if coord % $ROWLENGTH == 0
+      row = coord/$ROWLENGTH
+    else
+      row = coord/$ROWLENGTH + 1
+    end
+  end
+
+  def makeMove(fromCoord, toCoord)
+    if (fromCoord < 1 || fromCoord > $SIZE) || (toCoord < 1 || toCoord > $SIZE)
+      return false
+    end
+    if isMoveValid(fromCoord, toCoord)
+      if toCoord != @toCoord
+        @board[toCoord] = $EMPTY
+      end
+      @board[@toCoord] = @board[fromCoord]
+      @board[fromCoord] = $EMPTY
+      print fromCoord 
+      print "->"
+      print @toCoord
+      print "\n"
+      printBoard
+      return true
+    end
+    return false
+  end
+
+  def isMoveValid(fromCoord, toCoord)
+    @toCoord = toCoord
+    row = getRow(fromCoord)
+
+    if @board[fromCoord] == $EMPTY
+      return false
+    end
+
+    if @board[fromCoord] == $BLACK
+      if row % 2 == 0
+        newLeftCoord  = fromCoord + $ROWLENGTH
+        newRightCoord = fromCoord + $ROWLENGTH + 1
+      else
+        newLeftCoord  = fromCoord + $ROWLENGTH - 1
+        newRightCoord = fromCoord + $ROWLENGTH
+      end
+
+      newRow = row + 1
+
+      if (getRow(newLeftCoord) > $ROWS) || (getRow(newRightCoord) > $ROWS)
+        return false
+      end
+    end
+
+    if @board[fromCoord] == $WHITE
+      if row % 2 == 0
+        newLeftCoord  = fromCoord - $ROWLENGTH
+        newRightCoord = fromCoord - $ROWLENGTH + 1
+      else
+        newLeftCoord  = fromCoord - $ROWLENGTH - 1
+        newRightCoord = fromCoord - $ROWLENGTH 
+      end
+
+      newRow = row - 1
+
+      if (getRow(newLeftCoord) < 1) || (getRow(newRightCoord) < 1)
+        return false
+      end
+    end
+    
+    if getRow(newRightCoord) == newRow || getRow(newLeftCoord) == newRow
+    
+      if toCoord == newRightCoord || toCoord == newLeftCoord
+        if @board[toCoord] == $EMPTY
+          return true
+        end
+        if @board[toCoord] == @board[fromCoord]
+          return false
+        end
+
+        if @board[fromCoord] == $WHITE && @board[toCoord] == $BLACK
+          if toCoord == newLeftCoord
+            @toCoord -= $ROWLENGTH
+          else
+            @toCoord -= $ROWLENGTH + 1
+          end
+        end
+        if @board[fromCoord] == $BLACK && @board[toCoord] == $WHITE
+          if toCoord == newLeftCoord
+            @toCoord += $ROWLENGTH - 1
+          else
+            @toCoord += $ROWLENGTH
+          end
+        end
+
+
+
+
+
+        if (getRow(toCoord) < 1) || (getRow(toCoord) > $ROWS)
+          return false
+        else
+          return true
+        end
+      else
+        return false
+      end
+
+    end
+  end
+
+  def printBoard
+    print "\n"
+    for i in (1..$SIZE)
+      if getRow(i) % 2 == 0
+        print "."
+        print @board[i]
+      else
+        print @board[i]
+        print "."
+      end                
+      if i % $ROWLENGTH == 0 # break up in rows
+        print "\n"
+      end
+    end
+    print "\n"
+  end
+
+end

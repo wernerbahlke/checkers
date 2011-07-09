@@ -1,0 +1,56 @@
+require './checkers'
+
+checkers = Checkers.new
+
+print "\nINVALID MOVES\n\n"
+
+print "Move from 1 to 4:\n"
+
+r = checkers.isMoveValid(1,4)
+
+print "Move valid: ", r
+
+print "\n\n"
+
+print "Move from 13 (empty) to 17\n"
+
+r = checkers.isMoveValid(13,17)
+
+print "Move valid:", r
+
+print "\n\n"
+
+print "\nNow make some BLACK moves\n"
+
+print "Move from 9 to 18\n"
+
+checkers.makeMove(9,13)
+
+checkers.makeMove(13,18)
+
+print "\nNow make some WHITE moves\n"
+
+print "Move from 21 to 18\n"
+
+checkers = Checkers.new
+
+checkers.makeMove(21,18)
+
+print "\And now CAPTURE\n"
+
+checkers = Checkers.new
+
+checkers.makeMove(9,13)
+
+checkers.makeMove(22,18)
+
+checkers.makeMove(13,18)
+
+checkers.makeMove(27,22)
+
+
+checkers.makeMove(18,14)
+
+checkers.makeMove(11,14)
+
+
