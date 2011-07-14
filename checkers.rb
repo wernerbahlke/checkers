@@ -62,7 +62,13 @@ class Checkers
         @board[@captureCoord] = $EMPTY
       end
       @board[toCoord] = @board[fromCoord]
-      @board[fromCoord] = $EMPTY
+      if @board[fromCoord] == $WHITE && getRow(toCoord) == 1
+        @board[toCoord] = $WHITE_KING
+      end
+      if @board[fromCoord] == $BLACK && getRow(toCoord) == 8
+        @board[toCoord] = $BLACK_KING
+      end
+      @board[fromCoord] = $EMPTY   
       return true
     end
     return false
