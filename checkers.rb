@@ -108,15 +108,19 @@ class Checkers
 
       if toCoord == moveRowsLeft(fromCoord, twoRows)
         if @board[fromCoord] != @board[moveRowsLeft(fromCoord, oneRow)]
-          @captureCoord = moveRowsLeft(fromCoord, oneRow)
-          return true
+          if @board[moveRowsLeft(fromCoord, oneRow)] != $EMPTY
+            @captureCoord = moveRowsLeft(fromCoord, oneRow)
+            return true
+          end
         end
       end
 
       if toCoord == moveRowsRight(fromCoord, twoRows)
         if @board[fromCoord] != @board[moveRowsRight(fromCoord, oneRow)]
-          @captureCoord = moveRowsRight(fromCoord, oneRow)
-          return true
+          if @board[moveRowsRight(fromCoord, oneRow)] != $EMPTY
+            @captureCoord = moveRowsRight(fromCoord, oneRow)
+            return true
+          end
         end
       end
       return false

@@ -31,6 +31,7 @@ describe Checkers do
   it "should return indication if move is valid" do
     @checkers.isMoveValid(1,5).should be_false
     @checkers.isMoveValid(1,4).should be_false
+    @checkers.isMoveValid(10,19).should be_false
     @checkers.isMoveValid(13,17).should be_false
     @checkers.isMoveValid(32,29).should be_false
     @checkers.isMoveValid(32,28).should be_false
